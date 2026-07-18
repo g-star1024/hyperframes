@@ -247,7 +247,6 @@ export const Timeline = memo(function Timeline({
     setResizingClip,
     blockedClipRef,
     suppressClickRef,
-    syncClipDragAutoScroll,
   } = useTimelineClipDrag({
     scrollRef,
     ppsRef,
@@ -264,6 +263,7 @@ export const Timeline = memo(function Timeline({
     readZIndex: zSyncEnabled ? readClipZIndex : undefined,
     onStackingPatches: zSyncEnabled ? applyStackingPatches : undefined,
     refreshAfterLaneMove,
+    sessionEpoch,
   });
 
   const { isDragOver, handleAssetDragOver, handleAssetDrop, clearDropPreview } =
@@ -339,7 +339,9 @@ export const Timeline = memo(function Timeline({
     duration: displayDuration,
     selectedElementId: selectedElementId ?? undefined,
     draggedElementId: draggedClip?.element.key ?? draggedClip?.element.id,
-    resizingElementId: resizingClip?.element.key ?? resizingClip?.element.id,
+    resizingElementIds:
+      resizingClip?.groupPreview?.map((change) => change.key) ??
+      (resizingClip ? [resizingClip.element.key ?? resizingClip.element.id] : undefined),
     revealElementId: clipRevealRequest?.elementId,
     focusedEaseElementId: focusedEaseSegment?.elementId,
     clipContextMenuElementId: clipContextMenu?.element.key ?? clipContextMenu?.element.id,
@@ -538,7 +540,6 @@ export const Timeline = memo(function Timeline({
           setResizingClip={setResizingClip}
           setDraggedClip={setDraggedClip}
           setSelectedElementId={setSelectedElementId}
-          syncClipDragAutoScroll={syncClipDragAutoScroll}
           shiftClickClipRef={shiftClickClipRef}
           getPreviewElement={getPreviewElement}
           getTrackStyle={getTrackStyle}
