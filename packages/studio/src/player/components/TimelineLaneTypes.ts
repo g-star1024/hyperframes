@@ -28,6 +28,7 @@ export interface TimelineLaneBaseProps {
   rowGeometry: TimelineRowGeometry;
   virtualRows: readonly TimelineVirtualRow[];
   logicalRows: readonly TimelineLogicalRow[];
+  focusedTargetId: string | null;
   rowsVirtualized: boolean;
   clipIndex: TimelineClipIndex;
   renderTimeRange: TimelineTimeRange;

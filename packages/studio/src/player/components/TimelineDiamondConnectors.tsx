@@ -2,7 +2,8 @@ import { Fragment, useRef } from "react";
 import { KEYFRAME_DRAG_THRESHOLD_PX } from "../../components/editor/keyframeDrag";
 import { MiniCurveSvg } from "../../components/editor/EaseCurveSection";
 import type { TimelineKeyframeTarget } from "./timelineKeyframeIdentity";
-import type { TimelineDiamondKeyframe } from "./TimelineClipDiamonds";
+import { keyframeTimeLabel, type TimelineDiamondKeyframe } from "./TimelineClipDiamonds";
+import { timelineEaseFocusId } from "./timelineNavigationIdentity";
 
 /** One diamond's geometry within its row, as computed by the lane. */
 export interface TimelineDiamondMarker {
@@ -21,6 +22,10 @@ export interface TimelineDiamondMarker {
 export function TimelineDiamondConnectors({
   markers,
   centerY,
+  elementId,
+  clipStart,
+  clipDuration,
+  rovingTargetId,
   baseColor,
   baseOpacity,
   groupAware,
@@ -30,6 +35,11 @@ export function TimelineDiamondConnectors({
 }: {
   markers: readonly TimelineDiamondMarker[];
   centerY: number;
+  elementId: string;
+  clipStart: number;
+  clipDuration: number;
+  /** Focus id of the one timeline control currently in the tab order. */
+  rovingTargetId: string | null;
   baseColor: string;
   baseOpacity: number;
   groupAware: boolean;
@@ -62,6 +72,7 @@ export function TimelineDiamondConnectors({
         // id (runtime-scanned) and there is no tween to target.
         const target = keyframeTarget(kf);
         const ease = kf.ease ?? globalEase;
+        const focusId = timelineEaseFocusId(elementId, target);
         return (
           <Fragment key={`line-${i}-${previous.keyframe.percentage}-${kf.percentage}`}>
             <div
@@ -101,7 +112,9 @@ export function TimelineDiamondConnectors({
                 <button
                   type="button"
                   data-keyframe-ease-button=""
-                  aria-label={`Edit ${ease} easing`}
+                  data-timeline-focus-id={focusId}
+                  tabIndex={focusId === rovingTargetId ? 0 : -1}
+                  aria-label={`Edit ${ease} easing after ${keyframeTimeLabel(clipStart, clipDuration, previous.keyframe.percentage)}`}
                   title={`Edit ${ease} easing`}
                   className="absolute flex items-center justify-center rounded opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
                   style={{

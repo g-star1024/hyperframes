@@ -34,6 +34,7 @@ export function LayerDisclosureRow({
     >
       <button
         type="button"
+        tabIndex={-1}
         aria-expanded={isExpanded}
         aria-label={`${isExpanded ? "Collapse" : "Expand"} ${name} keyframes`}
         title={`${isExpanded ? "Collapse" : "Expand"} keyframe lanes`}
