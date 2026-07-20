@@ -5,6 +5,7 @@ import {
   clearKeyframeCacheForElement,
   clearKeyframeCacheForFile,
   pruneKeyframeCacheToFiles,
+  replaceKeyframeCacheForFile,
   updateKeyframeCacheFromParsed,
 } from "./gsapKeyframeCacheHelpers";
 
@@ -151,6 +152,61 @@ describe("pruneKeyframeCacheToFiles", () => {
 
     expect(cache().has("index.html#hero")).toBe(true);
     expect(cache().has("comp.html#a")).toBe(true);
+  });
+});
+
+describe("replaceKeyframeCacheForFile", () => {
+  it("publishes complete keyframe and animation maps in one notification", () => {
+    const staleEntry = entry();
+    const otherEntry = entry();
+    const staleAnimation = animWithKeyframes("stale");
+    const freshAnimation = animWithKeyframes("fresh");
+    usePlayerStore.setState({
+      keyframeCache: new Map([
+        ["scene.html#stale", staleEntry],
+        ["index.html#stale", staleEntry],
+        ["stale", staleEntry],
+        ["other.html#other", otherEntry],
+        ["other", otherEntry],
+      ]),
+      gsapAnimations: new Map([
+        ["scene.html#stale", [staleAnimation]],
+        ["index.html#stale", [staleAnimation]],
+        ["stale", [staleAnimation]],
+        ["other.html#other", [staleAnimation]],
+        ["other", [staleAnimation]],
+      ]),
+    });
+    const snapshots: Array<{ cacheKeys: string[]; animationKeys: string[] }> = [];
+    const unsubscribe = usePlayerStore.subscribe((state) => {
+      snapshots.push({
+        cacheKeys: [...state.keyframeCache.keys()].sort(),
+        animationKeys: [...state.gsapAnimations.keys()].sort(),
+      });
+    });
+
+    replaceKeyframeCacheForFile(
+      "scene.html",
+      new Map([["fresh", entry()]]),
+      new Map([["fresh", [freshAnimation]]]),
+    );
+    unsubscribe();
+
+    expect(snapshots).toEqual([
+      {
+        cacheKeys: ["fresh", "index.html#fresh", "other", "other.html#other", "scene.html#fresh"],
+        animationKeys: [
+          "fresh",
+          "index.html#fresh",
+          "other",
+          "other.html#other",
+          "scene.html#fresh",
+        ],
+      },
+    ]);
+    expect(usePlayerStore.getState().gsapAnimations.get("scene.html#fresh")).toEqual([
+      freshAnimation,
+    ]);
   });
 });
 
