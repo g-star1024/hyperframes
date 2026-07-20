@@ -9,6 +9,7 @@ import { synthesizeFlatTweenKeyframes } from "../../hooks/gsapTweenSynth";
 import { TimelineDiamondLane, type TimelineDiamondKeyframe } from "./TimelineClipDiamonds";
 import { LANE_H, getTimelineLaneTop } from "./timelineLayout";
 import type { TimelineKeyframeTarget } from "./timelineKeyframeIdentity";
+import { timelineLogicalRowCellId, timelinePropertyRowId } from "./timelineNavigationIdentity";
 
 export interface TimelinePropertyLanesProps {
   animations: readonly GsapAnimation[];
@@ -154,6 +155,7 @@ export function TimelinePropertyLanes({
       {laneData.map(({ group, keyframesData }, laneIndex) => (
         <div
           key={group}
+          id={timelineLogicalRowCellId(timelinePropertyRowId(elementId, group), "content")}
           role="group"
           aria-label={`${group} keyframes`}
           data-property-group={group}
