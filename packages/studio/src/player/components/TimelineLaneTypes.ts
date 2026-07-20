@@ -10,6 +10,7 @@ import type { TimelineClipIndex, TimelineTimeRange } from "../lib/timelineClipIn
 import type { TimelineRowGeometry } from "./timelineLayout";
 import type { TimelineVirtualRow } from "./useTimelineVirtualRows";
 import type { TimelineLogicalRow } from "./timelineKeyboardNavigation";
+import type { TimelineClipRenderContext } from "./TimelineTypes";
 
 /**
  * Props shared by the scroll container ({@link TimelineCanvas}) and its lane
@@ -32,6 +33,7 @@ export interface TimelineLaneBaseProps {
   rowsVirtualized: boolean;
   clipIndex: TimelineClipIndex;
   renderTimeRange: TimelineTimeRange;
+  visibleTimeRange: TimelineTimeRange;
   pinnedClipIdentities: ReadonlySet<string>;
   trackOrder: number[];
   tracks: [number, TimelineElement[]][];
@@ -47,6 +49,7 @@ export interface TimelineLaneBaseProps {
   renderClipContent?: (
     element: TimelineElement,
     style: { clip: string; label: string },
+    context: TimelineClipRenderContext,
   ) => ReactNode;
   renderClipOverlay?: (element: TimelineElement) => ReactNode;
   onDrillDown?: (element: TimelineElement) => void;
