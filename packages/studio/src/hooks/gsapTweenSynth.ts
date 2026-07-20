@@ -27,7 +27,7 @@ export interface AnimationKeyframeTarget {
   tweenPercentage: number;
 }
 
-export function accumulateCollidingAnimationTargets(
+function accumulateCollidingAnimationTargets(
   keyframe: {
     animationId?: string;
     tweenPercentage?: number;

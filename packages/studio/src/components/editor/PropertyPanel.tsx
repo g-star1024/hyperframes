@@ -101,6 +101,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
     onUpdateArcSegment,
     onUnroll,
     onUpdateKeyframeEase,
+    onUpdateSegmentEase,
     onSetAllKeyframeEases,
     onAddKeyframe,
     onRemoveKeyframe,
@@ -560,6 +561,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
           onAddGsapProperty &&
           onAddGsapAnimation && (
             <GsapAnimationSection
+              elementId={`${element.sourceFile || "index.html"}#${element.id}`}
               animations={gsapAnimations}
               multipleTimelines={gsapMultipleTimelines}
               unsupportedTimelinePattern={gsapUnsupportedTimelinePattern}
@@ -577,6 +579,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
               onUnroll={onUnroll}
               onUpdateKeyframeEase={onUpdateKeyframeEase}
               onSetAllKeyframeEases={onSetAllKeyframeEases}
+              onUpdateSegmentEase={onUpdateSegmentEase}
             />
           )}
 
