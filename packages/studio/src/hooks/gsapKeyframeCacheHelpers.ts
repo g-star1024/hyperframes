@@ -44,9 +44,9 @@ export function updateKeyframeCacheFromParsed(
 
     const existing = merged.get(id);
     if (existing) {
-      // deduplicateKeyframes owns the same-% merge (including the easeAmbiguous
-      // flag downstream lanes read); a second copy of that rule here is how the
-      // two writers drift.
+      // deduplicateKeyframes owns the same-% merge (including the colliding
+      // animation targets downstream lanes read); a second copy of that rule
+      // here is how the two writers drift.
       existing.keyframes = deduplicateKeyframes([...existing.keyframes, ...clipKeyframes]);
     } else {
       merged.set(id, {

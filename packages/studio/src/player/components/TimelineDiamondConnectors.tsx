@@ -55,11 +55,11 @@ export function TimelineDiamondConnectors({
         if (x2 - x1 < 1) return null;
         const connectorLeft = x1 + previous.visualSize / 2;
         const connectorWidth = x2 - x1 - previous.visualSize / 2 - marker.visualSize / 2;
-        // The ease button targets one segment, so it needs the keyframe's own
-        // animationId/tweenPercentage. On a merged inline row the button is
-        // hidden where the segment is ambiguous (two source animations collide
-        // at this % with different eases; see easeAmbiguous) or the keyframe has
-        // no source animation id (runtime-scanned) so there is no tween to target.
+        // The ease button needs the keyframe's own animationId/tweenPercentage.
+        // On a merged inline row it edits the ease of every animation colliding
+        // at this percentage at once (the collapsed row is the element's unified
+        // motion), so it is only hidden when the keyframe has no source animation
+        // id (runtime-scanned) and there is no tween to target.
         const target = keyframeTarget(kf);
         const ease = kf.ease ?? globalEase;
         return (
@@ -78,7 +78,7 @@ export function TimelineDiamondConnectors({
                 borderRadius: 1,
               }}
             />
-            {onSelectSegment && !kf.easeAmbiguous && kf.animationId !== undefined && (
+            {onSelectSegment && kf.animationId !== undefined && (
               <div
                 className="group absolute"
                 data-keyframe-ease-segment=""
