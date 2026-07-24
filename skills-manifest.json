@@ -2,11 +2,11 @@
   "source": "heygen-com/hyperframes",
   "skills": {
     "embedded-captions": {
-      "hash": "a30d5691b4389ec1",
+      "hash": "ed4dc7b850b92ff5",
       "files": 140
     },
     "faceless-explainer": {
-      "hash": "d53bcc3cbcfaa7bb",
+      "hash": "e3b1f559cb51e2d9",
       "files": 22
     },
     "figma": {
@@ -14,7 +14,7 @@
       "files": 2
     },
     "general-video": {
-      "hash": "3303742225924078",
+      "hash": "1f707431002b292d",
       "files": 4
     },
     "hyperframes": {
@@ -26,7 +26,7 @@
       "files": 121
     },
     "hyperframes-cli": {
-      "hash": "dc57ec7198b9eaac",
+      "hash": "a417a4530401159b",
       "files": 11
     },
     "hyperframes-core": {
@@ -50,19 +50,19 @@
       "files": 145
     },
     "motion-graphics": {
-      "hash": "da65c1864debfe11",
+      "hash": "0212a19069119e72",
       "files": 23
     },
     "music-to-video": {
-      "hash": "562656e2a2f3a193",
+      "hash": "55a2b5fdcd6f892c",
       "files": 132
     },
     "pr-to-video": {
-      "hash": "17ed27aa2cc32501",
+      "hash": "780b255672618b3e",
       "files": 29
     },
     "product-launch-video": {
-      "hash": "84b33f077fff496d",
+      "hash": "8cce4a32487eaf80",
       "files": 26
     },
     "remotion-to-hyperframes": {
